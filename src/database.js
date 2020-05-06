@@ -194,3 +194,7 @@ const collections = [
        "nameId": "col-1-name-8"
     }
  ]
+
+ export default {collections,names, profiles}
+ 
+ 

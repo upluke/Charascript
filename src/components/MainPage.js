@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -9,29 +9,33 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
+import initialData from '../database'
+import Name from './Name'
 
 const drawerWidth = 270;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    background:'#444',
+    background:'#2A363B',
     color:'#fff',
-    height:'100vh'
+    height:'100%'
   },
   appBar: {
+    background:"#99B898",
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
   },
   appBarShift: {
+    background:'#A8A7A7',
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
     transition: theme.transitions.create(['margin', 'width'], {
@@ -46,16 +50,19 @@ const useStyles = makeStyles((theme) => ({
     display: 'none',
   },
   drawer: {
+    
     width: drawerWidth,
     flexShrink: 0,
   },
   drawerPaper: {
+    color:'#fff',
+    background:'#A8A7A7',
     width: drawerWidth,
   },
   drawerHeader: {
     display: 'flex',
     alignItems: 'center',
-    padding: theme.spacing(0, 1),
+    padding: theme.spacing(0, 0),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
@@ -83,6 +90,9 @@ export default ()=> {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
+  const [data, setData]=useState(initialData)
+  const [characters, setCharacters]=useState([])
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -91,6 +101,24 @@ export default ()=> {
     setOpen(false);
   };
 
+  
+  const getCollectionName=(index)=>{
+
+    let clickedCollectionId=data.collections[index].collectionId
+    let tmpChas=[]
+    data.names.map(n=>{
+       if(n.nameId.includes(clickedCollectionId)){
+          tmpChas.push({id:n.nameId, name:n.name})
+       }
+    })
+    setCharacters(...characters, tmpChas)
+
+  }
+
+  
+   console.log("char: ", characters)
+
+  
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -109,7 +137,7 @@ export default ()=> {
             edge="start"
             className={clsx(classes.menuButton, open && classes.hide)}
           >
-            <MenuIcon />
+            <MenuBookIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
             Charascript
@@ -127,15 +155,18 @@ export default ()=> {
         }}
       >
         <div className={classes.drawerHeader}>
+          <ListItem><ListItemText>Literature</ListItemText></ListItem>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
+         
         </div>
+    
         <Divider />
         <List>
           {['Othello', 'Season of Migration to the North'].map((text, index) => (
             <ListItem button key={text}>
-              <ListItemText primary={text} />
+              <ListItemText primary={text} onClick={()=>getCollectionName(index)} />
             </ListItem>
           ))}
         </List>
@@ -146,20 +177,12 @@ export default ()=> {
         })}
       >
         <div className={classes.drawerHeader} />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
-          facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-          gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id
-          donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-          adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-          Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis
-          imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
-          arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-          donec massa sapien faucibus et molestie ac.
-        </Typography>
-     
+        
+      {characters.map((c)=> <Name key={c.id} name= {c.name} />)} 
       </main>
+     
+     
+        
     </div>
   );
 }
