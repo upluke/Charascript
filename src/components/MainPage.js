@@ -17,6 +17,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import initialData from '../database'
 import Name from './Name'
+import Profile from './Profile'
+import Colection from './Collection'
 
 const drawerWidth = 270;
 
@@ -25,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     background:'#2A363B',
     color:'#fff',
-    height:'100%'
   },
   appBar: {
     background:"#99B898",
@@ -68,8 +69,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-end',
   },
   content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
+    
+    
+    padding: theme.spacing(5),
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -83,16 +85,23 @@ const useStyles = makeStyles((theme) => ({
     }),
     marginLeft: 0,
   },
+  nameAndProfileContainer:{
+    display:'flex',
+    width:'100%',
+    justifyContent:'space-between'
+  }
 }));
 
 export default ()=> {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const [data, setData]=useState(initialData)
   const [characters, setCharacters]=useState([])
+  const [profiles, setProfiles]=useState([])
 
+  // styling functions
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -101,8 +110,8 @@ export default ()=> {
     setOpen(false);
   };
 
-  
-  const getCollectionName=(index)=>{
+  // get names from colections
+  const getCollectionNamesAndProfiles=(index)=>{
 
     let clickedCollectionId=data.collections[index].collectionId
     let tmpChas=[]
@@ -113,10 +122,19 @@ export default ()=> {
     })
     setCharacters(...characters, tmpChas)
 
+    let tmpProfs=[]
+    data.profiles.map(p=>{
+      if(p.profileId.includes(clickedCollectionId)){
+        tmpProfs.push({id:p.profileId, profile:p.profile})
+      }
+    })
+    setProfiles(...profiles, tmpProfs)
+
   }
 
   
    console.log("char: ", characters)
+   console.log("profle: ", profiles)
 
   
   return (
@@ -166,7 +184,7 @@ export default ()=> {
         <List>
           {['Othello', 'Season of Migration to the North'].map((text, index) => (
             <ListItem button key={text}>
-              <ListItemText primary={text} onClick={()=>getCollectionName(index)} />
+              <ListItemText primary={text} onClick={()=>getCollectionNamesAndProfiles(index)} />
             </ListItem>
           ))}
         </List>
@@ -177,8 +195,19 @@ export default ()=> {
         })}
       >
         <div className={classes.drawerHeader} />
+        <div className={classes.nameAndProfileContainer}>
+          <div style={{margin:'3rem'}}>
+            {characters.map((c)=> <Name key={c.id} name= {c.name} />)} 
+          </div>
         
-      {characters.map((c)=> <Name key={c.id} name= {c.name} />)} 
+          <div style={{margin:'3rem', height:'58rem', width:'30rem', background:'#fff'}} >
+            <Colection />
+          </div>
+           
+          <div style={{margin:'3rem'}}>
+             {profiles.map((p)=><Profile key={p.id} profile={p.profile} />)}
+          </div>
+       </div>
       </main>
      
      

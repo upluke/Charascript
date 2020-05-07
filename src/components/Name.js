@@ -6,8 +6,8 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
     root: {
-      minWidth: 150,
-      maxWidth: "20%",
+      minWidth:  400,
+      minHeight: 100,
       marginBottom:20,
       textAlign:'center'
     },
@@ -17,6 +17,7 @@ const useStyles = makeStyles({
   });
 
 export default ({name})=>{
+ 
     const classes = useStyles();
     console.log("inside name: ", name)
     return(
