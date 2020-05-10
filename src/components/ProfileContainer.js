@@ -3,8 +3,8 @@ import ProfileBox from './ProfileBox'
 const ProfileContainer = ({ profiles }) => {
   return (
     <>
-      {profiles.map((p) => (
-        <ProfileBox key={p.profileId} profile={p.profile} />
+      {profiles.map((p, index) => (
+        <ProfileBox key={p.profileId} profile={p.profile} index={index} />
       ))}
     </>
   )

@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles({
   root: {
+    width: 300,
     marginBottom: 20,
     textAlign: 'center',
   },
