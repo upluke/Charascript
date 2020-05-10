@@ -15,7 +15,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 
-import initialData from '../database'
+import initialData from '../database/allData'
 import Name from './Name'
 import Profile from './Profile'
 import Colection from './Collection'
