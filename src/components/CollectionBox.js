@@ -6,8 +6,11 @@ import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles({
   root: {
+    width: 300,
     marginBottom: 20,
     textAlign: 'center',
+    backgroundColor: 'grey',
+    border: '3px dashed white',
   },
   title: {
     fontSize: 15,
@@ -24,7 +27,7 @@ export default () => {
           color="textSecondary"
           gutterBottom
         >
-          place holder
+          Please drag your answer to here
         </Typography>
       </CardContent>
     </Card>
