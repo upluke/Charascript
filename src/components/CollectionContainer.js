@@ -1,20 +1,13 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles({
-    root: {
-      textAlign:'center',
-      background:"#fff"
-    },
-    
-  });
-
-export default ()=>{
-    const classes = useStyles();
-
-    return(
-        <div className={classes.root}>
-         
-        </div>
-    )
+import CollectionBox from './CollectionBox'
+const CollectionContainer = ({ characters }) => {
+  return (
+    <>
+      {characters.map((c) => (
+        <CollectionBox key={c.nameId} />
+      ))}
+    </>
+  )
 }
+
+export default CollectionContainer

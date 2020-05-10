@@ -6,9 +6,11 @@ import initialData from '../database/allData'
 import NameContainer from './NameContainer'
 import ProfileContainer from './ProfileContainer'
 import CollectionContainer from './CollectionContainer'
+import CollectionBox from './CollectionBox'
 import TopNav from './TopNav'
 import LeftNav from './LeftNav'
 import Introduction from './Introduction'
+import Grid from '@material-ui/core/Grid'
 const drawerWidth = 270
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -86,26 +88,23 @@ export default () => {
   console.log('profle: ', profiles)
 
   const renderContent = open ? (
-    <>
-      <div style={{ margin: '3rem' }}>
-        <NameContainer characters={characters} />
-      </div>
-
-      <div
-        style={{
-          margin: '3rem',
-          height: '58rem',
-          width: '30rem',
-          background: '#fff',
-        }}
-      >
-        <CollectionContainer />
-      </div>
-
-      <div style={{ margin: '3rem' }}>
-        <ProfileContainer profiles={profiles} />
-      </div>
-    </>
+    <Grid container>
+      <Grid item xs={4}>
+        <div style={{ margin: '3rem' }}>
+          <NameContainer characters={characters} />
+        </div>
+      </Grid>
+      <Grid item xs={4}>
+        <div style={{ margin: '3rem' }}>
+          <CollectionContainer characters={characters} />
+        </div>
+      </Grid>
+      <Grid item xs={4}>
+        <div style={{ margin: '3rem' }}>
+          <ProfileContainer profiles={profiles} />
+        </div>
+      </Grid>
+    </Grid>
   ) : (
     <Introduction />
   )

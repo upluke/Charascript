@@ -14,9 +14,8 @@ const useStyles = makeStyles({
   },
 })
 
-export default ({ name }) => {
+export default () => {
   const classes = useStyles()
-  console.log('inside name: ', name)
   return (
     <Card className={classes.root}>
       <CardContent>
@@ -25,7 +24,7 @@ export default ({ name }) => {
           color="textSecondary"
           gutterBottom
         >
-          {name}
+          place holder
         </Typography>
       </CardContent>
     </Card>
