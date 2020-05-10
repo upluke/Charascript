@@ -40,6 +40,7 @@ const LeftNav = ({
 }) => {
   const classes = useStyles()
   const theme = useTheme()
+  const [selectedListItem, setSelectedListItem] = React.useState(0)
   return (
     <Drawer
       className={classes.drawer}
@@ -68,13 +69,16 @@ const LeftNav = ({
         {initialData.collections.map((collection, index) => {
           const text = collection.collectionName
           return (
-            <ListItem button key={text}>
-              <ListItemText
-                primary={text}
-                onClick={() =>
-                  getCollectionNamesAndProfiles(collection.characters)
-                }
-              />
+            <ListItem
+              button
+              key={text}
+              selected={index === selectedListItem}
+              onClick={() => {
+                getCollectionNamesAndProfiles(collection.characters)
+                setSelectedListItem(index)
+              }}
+            >
+              <ListItemText primary={text} />
             </ListItem>
           )
         })}

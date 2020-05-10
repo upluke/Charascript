@@ -8,6 +8,7 @@ import ProfileContainer from './ProfileContainer'
 import CollectionContainer from './CollectionContainer'
 import TopNav from './TopNav'
 import LeftNav from './LeftNav'
+import Introduction from './Introduction'
 const drawerWidth = 270
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,6 +46,12 @@ export default () => {
   const [characters, setCharacters] = useState([])
   const [profiles, setProfiles] = useState([])
 
+  React.useEffect(() => {
+    if (characters.length < 1) {
+      getCollectionNamesAndProfiles(initialData.collections[0].characters)
+    }
+  }, [])
+
   // styling functions
   const handleDrawerOpen = () => {
     setOpen(true)
@@ -78,6 +85,31 @@ export default () => {
   console.log('char: ', characters)
   console.log('profle: ', profiles)
 
+  const renderContent = open ? (
+    <>
+      <div style={{ margin: '3rem' }}>
+        <NameContainer characters={characters} />
+      </div>
+
+      <div
+        style={{
+          margin: '3rem',
+          height: '58rem',
+          width: '30rem',
+          background: '#fff',
+        }}
+      >
+        <CollectionContainer />
+      </div>
+
+      <div style={{ margin: '3rem' }}>
+        <ProfileContainer profiles={profiles} />
+      </div>
+    </>
+  ) : (
+    <Introduction />
+  )
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -95,26 +127,7 @@ export default () => {
         })}
       >
         <div className={classes.drawerHeader} />
-        <div className={classes.nameAndProfileContainer}>
-          <div style={{ margin: '3rem' }}>
-            <NameContainer characters={characters} />
-          </div>
-
-          <div
-            style={{
-              margin: '3rem',
-              height: '58rem',
-              width: '30rem',
-              background: '#fff',
-            }}
-          >
-            <CollectionContainer />
-          </div>
-
-          <div style={{ margin: '3rem' }}>
-            <ProfileContainer profiles={profiles} />
-          </div>
-        </div>
+        <div className={classes.nameAndProfileContainer}>{renderContent}</div>
       </main>
     </div>
   )
