@@ -31,7 +31,14 @@ const useStyles = makeStyles((theme) => ({
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
   },
+  selected: {
+    backgroundColor: "#FF847C !important", // "!important" is used to overide styles
+    color: "#2A363B",
+    fontWeight:600
+  }
 }))
+
+
 
 const LeftNav = ({
   open,
@@ -70,6 +77,8 @@ const LeftNav = ({
           const text = collection.collectionName
           return (
             <ListItem
+              
+              classes={{ selected: classes.selected }} //overide styles w/ "!important"
               button
               key={text}
               selected={index === selectedListItem}

@@ -7,7 +7,7 @@ const useStyles = makeStyles({
   root: {
     margin: '3rem',
     maxWidth: 800,
-    height: `calc(100vh - 176px)`,
+    // height: `calc(100vh - 176px)`,
   },
   title: {
     fontSize: 15,

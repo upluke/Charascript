@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     marginBottom: 20,
     textAlign: 'center',
     backgroundColor: 'grey',
-    border: '3px dashed white',
+    border: '3px dashed white', 
   },
   title: {
     fontSize: 15,
