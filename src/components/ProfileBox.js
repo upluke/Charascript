@@ -19,6 +19,9 @@ import ShareIcon from '@material-ui/icons/Share'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 
+import {ItemTypes} from '../database/types'
+import {useDrag} from 'react-dnd'
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: 300,
@@ -42,8 +45,17 @@ export default ({ profile, index }) => {
     setExpanded(!expanded)
   }
 
+  const [{isDragging}, drag]=useDrag({
+    item:{
+      type:ItemTypes.CARD,
+    },
+    collect: monitor=>({
+      isDragging: !!monitor.isDragging()
+    })
+  })
+
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} ref={drag} style={{opacity:isDragging?'0.5':'1'}}>
       <CardHeader
         onClick={handleExpandClick}
         avatar={
