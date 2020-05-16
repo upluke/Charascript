@@ -111,6 +111,8 @@ export default () => {
     <Introduction />
   )
 
+  console.log("profiles: ",profiles)
+
   return (
     <div className={classes.root}>
       <CssBaseline />

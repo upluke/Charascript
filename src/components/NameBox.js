@@ -19,7 +19,7 @@ const useStyles = makeStyles({
 export default ({ name }) => {
 
   const classes = useStyles()
-  console.log('inside name: ', name)
+
 
   
 

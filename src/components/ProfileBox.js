@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default ({ profile, index }) => {
+export default ({ profile, index, profileId }) => {
   const classes = useStyles()
   const [expanded, setExpanded] = React.useState(false)
   const handleExpandClick = () => {
@@ -48,12 +48,13 @@ export default ({ profile, index }) => {
   const [{isDragging}, drag]=useDrag({
     item:{
       type:ItemTypes.CARD,
+      id:profileId
     },
     collect: monitor=>({
       isDragging: !!monitor.isDragging()
     })
   })
-
+  
   return (
     <Card className={classes.root} ref={drag} style={{opacity:isDragging?'0.5':'1'}}>
       <CardHeader
