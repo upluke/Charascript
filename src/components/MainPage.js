@@ -17,6 +17,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     background: '#2A363B',
     color: '#fff',
+    minHeight:'100vh',
+    maxHeight:"auto",
   },
   content: {
     padding: theme.spacing(5),
@@ -103,6 +105,8 @@ export default () => {
   ) : (
     <Introduction />
   )
+
+  console.log("profiles: ",profiles)
 
   return (
     <div className={classes.root}>

@@ -8798,14 +8798,14 @@ react-dev-utils@^10.2.1:
     strip-ansi "6.0.0"
     text-table "0.2.0"
 
-react-dnd-html5-backend@11.1.0:
+react-dnd-html5-backend@^11.1.0:
   version "11.1.0"
   resolved "https://registry.yarnpkg.com/react-dnd-html5-backend/-/react-dnd-html5-backend-11.1.0.tgz#8d0bdabfdfd6ce7392d85c098c3573b62fb6a030"
   integrity sha512-gVauFMuQDdHANfxwAu3m7JRzMgYlbkmHUBR6/yBaJmYlVlrKohyaY68PyavPLP9dyaH2laYBF3zUcRaTVczdoA==
   dependencies:
     dnd-core "^11.1.0"
 
-react-dnd@11.1.0:
+react-dnd@^11.1.0:
   version "11.1.0"
   resolved "https://registry.yarnpkg.com/react-dnd/-/react-dnd-11.1.0.tgz#a8f819aa43d2d902ee8352fc0841407336ab6341"
   integrity sha512-2hWSDr9/ZMCnnWGQAN1x5hMZGo1K3y4Vina7DxDLICPQebvXHZxt/aeJ6f+ycsoIHCUqacKnABTyeFiWhpigUQ==
