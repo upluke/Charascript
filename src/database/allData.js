@@ -49,8 +49,8 @@ const getNames = (data) => {
 const getProfiles = (data) => {
   let profiles = []
   data.forEach((collection) => {
-    collection.characters.forEach((el) => {
-      profiles.push(el.profile)
+    collection.characters.forEach((el, index) => {
+      profiles.push({ id: index + 1, ...el.profile })
     })
   })
   return profiles
