@@ -90,19 +90,14 @@ export default () => {
   console.log('profle: ', profiles)
 
   const renderContent = open ? (
-    <Grid container>
+    <Grid container spacing={2}>
       <Grid item xs={4}>
-        <div style={{ margin: '3rem' }}>
+        <div style={{ marginTop: '3rem' }}>
           <NameContainer characters={characters} />
         </div>
       </Grid>
-      <Grid item xs={4}>
-        <div style={{ margin: '3rem' }}>
-          <CollectionContainer characters={characters} />
-        </div>
-      </Grid>
-      <Grid item xs={4}>
-        <div style={{ margin: '3rem' }}>
+      <Grid item xs={8}>
+        <div style={{ marginTop: '3rem' }}>
           <ProfileContainer profiles={profiles} />
         </div>
       </Grid>

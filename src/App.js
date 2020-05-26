@@ -1,17 +1,13 @@
-import React from 'react';
+import React from 'react'
 import MainPage from './components/MainPage'
-import './App.css';
-import { DndProvider} from 'react-dnd'
-import Backend from 'react-dnd-html5-backend'
+import './App.css'
 
 function App() {
   return (
-    <DndProvider backend={Backend}>
-      <div className="App">
-        <MainPage />
-      </div>
-    </DndProvider>
-  );
+    <div className="App">
+      <MainPage />
+    </div>
+  )
 }
 
-export default App;
+export default App
