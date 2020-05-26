@@ -95,7 +95,7 @@ export default ({ id, profile, index, moveCard, order }) => {
           onClick={handleExpandClick}
           avatar={
             <Avatar aria-label="recipe" className={classes.avatar}>
-              {order}
+              {Number(order) + 1}
             </Avatar>
           }
           title={`${profile.substring(0, 25)}...`}
