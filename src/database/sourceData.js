@@ -3,7 +3,7 @@ export const sourceData = [
     collectionName: 'Othello',
     characters: [
       {
-        name: 'Lago',
+        name: 'Iago',
         profile:
           "Othello's ensign (a job also known as an ancient or standard-bearer), and the villain of the play. Iago is twenty-eight years old. While his ostensible reason for desiring Othello's demise is that he has been passed over for promotion to lieutenant, Iago's motivations are never very clearly expressed and seem to originate in an obsessive, almost aesthetic delight in manipulation and destruction.",
       },

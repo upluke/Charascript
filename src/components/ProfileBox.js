@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import CardHeader from '@material-ui/core/CardHeader'
 import Collapse from '@material-ui/core/Collapse'
 import Avatar from '@material-ui/core/Avatar'
-import { red } from '@material-ui/core/colors'
+
 const style = {
   marginBottom: '.5rem',
   cursor: 'move',
@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 export default ({ id, profile, index, moveCard, order }) => {
   const classes = useStyles()
   const [expanded, setExpanded] = React.useState(false)
+
   const handleExpandClick = () => {
     setExpanded(!expanded)
   }

@@ -1,12 +1,15 @@
 import React, { useState, useCallback } from 'react'
 import ProfileBox from './ProfileBox'
 import update from 'immutability-helper'
-import { Card } from '@material-ui/core'
+
 const ProfileContainer = ({ profiles }) => {
-  console.log(profiles)
+  console.log("profilecontainer: ",profiles)
 
   const [cards, setCards] = useState([...profiles])
 
+
+
+  console.log("profileCard: ", cards)
   const moveCard = useCallback(
     (dragIndex, hoverIndex) => {
       const dragCard = cards[dragIndex]

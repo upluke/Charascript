@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
 import clsx from 'clsx'
-import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import initialData from '../database/allData'
 import NameContainer from './NameContainer'
 import ProfileContainer from './ProfileContainer'
-import CollectionContainer from './CollectionContainer'
-import CollectionBox from './CollectionBox'
 import TopNav from './TopNav'
 import LeftNav from './LeftNav'
 import Introduction from './Introduction'
@@ -46,7 +44,7 @@ export default () => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
 
-  const [data, setData] = useState(initialData)
+
   const [characters, setCharacters] = useState([])
   const [profiles, setProfiles] = useState([])
 
