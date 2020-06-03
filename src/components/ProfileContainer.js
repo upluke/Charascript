@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import ProfileBox from "./ProfileBox";
 import update from "immutability-helper";
 
-const ProfileContainer = ({ profiles }) => {
+const ProfileContainer = ({ profiles, setCurrentProfiles }) => {
   console.log("profilecontainer: ", profiles);
 
   const [cards, setCards] = useState([...profiles]);
@@ -20,8 +20,16 @@ const ProfileContainer = ({ profiles }) => {
           ],
         })
       );
+      setCurrentProfiles(
+        update(cards, {
+          $splice: [
+            [dragIndex, 1],
+            [hoverIndex, 0, dragCard],
+          ],
+        })
+      );
     },
-    [cards]
+    [cards, setCurrentProfiles]
   );
   const renderCard = (card, index) => {
     return (

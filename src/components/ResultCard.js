@@ -7,6 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
 import CancelIcon from "@material-ui/icons/Cancel";
+import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,13 +35,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ResultCard({ handleCloseResultCard }) {
+export default function ResultCard({
+  handleCloseResultCard,
+  characters,
+  currentProfiles,
+}) {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+
+  const resultCounter = () => {
+    let count = 0;
+    let profilesWithChecking = [...currentProfiles];
+    characters.forEach((character, index) => {
+      if (character.profileId === currentProfiles[index].profileId) {
+        count = count + 1;
+      } else {
+        profilesWithChecking[index].checking = false;
+      }
+    });
+    return { count, profilesWithChecking };
+  };
 
   const handleClose = () => {
     handleCloseResultCard();
   };
+
+  const result = resultCounter();
+
+  const percentage = (result.count / characters.length) * 100;
 
   return (
     <Card className={classes.root}>
@@ -51,14 +72,14 @@ export default function ResultCard({ handleCloseResultCard }) {
           </IconButton>
         }
         title="The Testing Result Down Below"
-        subheader="September 14, 2016"
+        subheader={`${moment().format("MMMM Do YYYY, h:mm:ss a")}`}
       />
 
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+        <Typography variant="h6" color="textSecondary" component="p">
+          {`Your score is ${percentage.toFixed(2)}% ! You answered ${
+            result.count
+          } of ${characters.length} questions correctly. `}
         </Typography>
       </CardContent>
     </Card>

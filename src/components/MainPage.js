@@ -9,9 +9,6 @@ import TopNav from "./TopNav";
 import LeftNav from "./LeftNav";
 import Introduction from "./Introduction";
 import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
 import ResultCard from "./ResultCard";
 
 const drawerWidth = 270;
@@ -51,6 +48,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const shuffle = (array) => {
+  var currentIndex = array.length,
+    temporaryValue,
+    randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+};
+
 export default () => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -60,6 +77,7 @@ export default () => {
   const [userInfo, setUserInfo] = useState({});
   const { userName, userEmail } = userInfo;
   const [isResultShown, setResultShown] = useState(false);
+  const [currentProfiles, setCurrentProfiles] = useState([]);
 
   const handleCloseResultCard = () => {
     setResultShown(false);
@@ -69,6 +87,28 @@ export default () => {
     let userInfoCopy = { ...userInfo };
     userInfoCopy[inputKey] = value;
     setUserInfo(userInfoCopy);
+  };
+
+  // get names from colections
+  const getCollectionNamesAndProfiles = (characters) => {
+    let tmpChas = initialData.names.reduce((accumulator, name) => {
+      if (characters.includes(name.profileId)) {
+        accumulator.push(name);
+      }
+      return accumulator;
+    }, []);
+
+    setCharacters(shuffle(tmpChas));
+
+    let tmpProfs = initialData.profiles.reduce((accumulator, profile) => {
+      if (characters.includes(profile.profileId)) {
+        accumulator.push(profile);
+      }
+      return accumulator;
+    }, []);
+
+    setProfiles(tmpProfs);
+    setCurrentProfiles(tmpProfs);
   };
 
   React.useEffect(() => {
@@ -90,27 +130,6 @@ export default () => {
     setResultShown(true);
   };
 
-  // get names from colections
-  const getCollectionNamesAndProfiles = (characters) => {
-    let tmpChas = initialData.names.reduce((accumulator, name) => {
-      if (characters.includes(name.profileId)) {
-        accumulator.push(name);
-      }
-      return accumulator;
-    }, []);
-
-    setCharacters(tmpChas);
-
-    let tmpProfs = initialData.profiles.reduce((accumulator, profile) => {
-      if (characters.includes(profile.profileId)) {
-        accumulator.push(profile);
-      }
-      return accumulator;
-    }, []);
-
-    setProfiles(tmpProfs);
-  };
-
   console.log("char: ", characters);
   console.log("profle: ", profiles);
 
@@ -118,7 +137,11 @@ export default () => {
     return isResultShown && open ? (
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <ResultCard handleCloseResultCard={handleCloseResultCard} />
+          <ResultCard
+            handleCloseResultCard={handleCloseResultCard}
+            characters={characters}
+            currentProfiles={currentProfiles}
+          />
         </Grid>
       </Grid>
     ) : null;
@@ -133,7 +156,10 @@ export default () => {
       </Grid>
       <Grid item xs={8}>
         <div style={{ marginTop: "3rem" }}>
-          <ProfileContainer profiles={profiles} />
+          <ProfileContainer
+            profiles={profiles}
+            setCurrentProfiles={setCurrentProfiles}
+          />
         </div>
       </Grid>
     </Grid>
