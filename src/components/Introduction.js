@@ -1,21 +1,49 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-
-import Typography from '@material-ui/core/Typography'
-
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import styled from "styled-components";
+const StyledButton = styled(Button)`
+  height: 58px;
+  width: 100px;
+  margin: 15px;
+`;
 const useStyles = makeStyles({
   root: {
-    margin: '3rem',
+    margin: "3rem",
     maxWidth: 800,
     // height: `calc(100vh - 176px)`,
   },
   title: {
     fontSize: 15,
   },
-})
+  textField: {
+    marginLeft: 0,
+    marginRight: 10,
+    width: 250,
+  },
 
-const Introduction = () => {
-  const classes = useStyles()
+  cssLabel: {
+    color: "white",
+  },
+
+  cssOutlinedInput: {
+    "&$cssFocused $notchedOutline": {
+      borderColor: `white !important`,
+    },
+  },
+
+  cssFocused: {},
+
+  notchedOutline: {
+    borderWidth: "1px",
+    borderColor: "white !important",
+  },
+});
+
+const Introduction = ({ handleUserInfoChange, handleDrawerOpen }) => {
+  const classes = useStyles();
   return (
     <div className={classes.root}>
       <Typography variant="h5">Introduction</Typography>
@@ -37,8 +65,63 @@ const Introduction = () => {
         also reproduced in their exact original form, accompanied by English
         versions from the 1914 translation by H. Rackham.
       </Typography>
+      <TextField
+        id="standard-name"
+        label="Name"
+        className={classes.textField}
+        margin="normal"
+        variant="outlined"
+        onChange={(e) => {
+          handleUserInfoChange("userName", e.target.value);
+        }}
+        InputLabelProps={{
+          classes: {
+            root: classes.cssLabel,
+            focused: classes.cssFocused,
+          },
+        }}
+        InputProps={{
+          classes: {
+            root: classes.cssOutlinedInput,
+            focused: classes.cssFocused,
+            notchedOutline: classes.notchedOutline,
+          },
+          inputMode: "numeric",
+        }}
+      />
+      <TextField
+        id="standard-email"
+        label="Email"
+        className={classes.textField}
+        margin="normal"
+        variant="outlined"
+        onChange={(e) => {
+          handleUserInfoChange("userEmail", e.target.value);
+        }}
+        InputLabelProps={{
+          classes: {
+            root: classes.cssLabel,
+            focused: classes.cssFocused,
+          },
+        }}
+        InputProps={{
+          classes: {
+            root: classes.cssOutlinedInput,
+            focused: classes.cssFocused,
+            notchedOutline: classes.notchedOutline,
+          },
+          inputMode: "numeric",
+        }}
+      />{" "}
+      <StyledButton
+        variant="contained"
+        color="primary"
+        onClick={handleDrawerOpen}
+      >
+        Start
+      </StyledButton>
     </div>
-  )
-}
+  );
+};
 
-export default Introduction
+export default Introduction;
