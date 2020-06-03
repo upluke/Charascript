@@ -1,18 +1,17 @@
-import React, { useState, useCallback } from 'react'
-import ProfileBox from './ProfileBox'
-import update from 'immutability-helper'
+import React, { useState, useCallback } from "react";
+import ProfileBox from "./ProfileBox";
+import update from "immutability-helper";
 
 const ProfileContainer = ({ profiles }) => {
-  console.log("profilecontainer: ",profiles)
+  console.log("profilecontainer: ", profiles);
 
-  const [cards, setCards] = useState([...profiles])
+  const [cards, setCards] = useState([...profiles]);
+  const [closeAll, setCloseAll] = useState(false);
 
-
-
-  console.log("profileCard: ", cards)
+  console.log("profileCard: ", cards);
   const moveCard = useCallback(
     (dragIndex, hoverIndex) => {
-      const dragCard = cards[dragIndex]
+      const dragCard = cards[dragIndex];
       setCards(
         update(cards, {
           $splice: [
@@ -20,10 +19,10 @@ const ProfileContainer = ({ profiles }) => {
             [hoverIndex, 0, dragCard],
           ],
         })
-      )
+      );
     },
     [cards]
-  )
+  );
   const renderCard = (card, index) => {
     return (
       <ProfileBox
@@ -33,11 +32,13 @@ const ProfileContainer = ({ profiles }) => {
         profile={card.profile}
         moveCard={moveCard}
         order={card.profileId.substr(-1)}
+        closeAll={closeAll}
+        setCloseAll={setCloseAll}
       />
-    )
-  }
+    );
+  };
 
-  return <>{cards.map((card, index) => renderCard(card, index))}</>
-}
+  return <>{cards.map((card, index) => renderCard(card, index))}</>;
+};
 
-export default ProfileContainer
+export default ProfileContainer;
