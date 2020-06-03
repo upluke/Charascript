@@ -10,6 +10,7 @@ import LeftNav from "./LeftNav";
 import Introduction from "./Introduction";
 import Grid from "@material-ui/core/Grid";
 import ResultCard from "./ResultCard";
+import ResultProfileContainer from "./ResultProfileContainer";
 
 const drawerWidth = 270;
 const useStyles = makeStyles((theme) => ({
@@ -147,29 +148,52 @@ export default () => {
     ) : null;
   };
 
-  const renderContent = open ? (
-    <Grid container spacing={2}>
-      <Grid item xs={4}>
-        <div style={{ marginTop: "3rem" }}>
-          <NameContainer characters={characters} />
-        </div>
-      </Grid>
-      <Grid item xs={8}>
-        <div style={{ marginTop: "3rem" }}>
-          <ProfileContainer
-            profiles={profiles}
-            setCurrentProfiles={setCurrentProfiles}
-          />
-        </div>
-      </Grid>
-    </Grid>
-  ) : (
-    <Introduction
-      handleUserInfoChange={handleUserInfoChange}
-      handleDrawerOpen={handleDrawerOpen}
-      userInfo={userInfo}
-    />
-  );
+  const renderContent = () => {
+    if (open) {
+      if (isResultShown) {
+        return (
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <div style={{ marginTop: "3rem" }}>
+                <NameContainer characters={characters} />
+              </div>
+            </Grid>
+            <Grid item xs={8}>
+              <div style={{ marginTop: "3rem" }}>
+                <ResultProfileContainer profiles={currentProfiles} />
+              </div>
+            </Grid>
+          </Grid>
+        );
+      } else {
+        return (
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <div style={{ marginTop: "3rem" }}>
+                <NameContainer characters={characters} />
+              </div>
+            </Grid>
+            <Grid item xs={8}>
+              <div style={{ marginTop: "3rem" }}>
+                <ProfileContainer
+                  profiles={profiles}
+                  setCurrentProfiles={setCurrentProfiles}
+                />
+              </div>
+            </Grid>
+          </Grid>
+        );
+      }
+    } else {
+      return (
+        <Introduction
+          handleUserInfoChange={handleUserInfoChange}
+          handleDrawerOpen={handleDrawerOpen}
+          userInfo={userInfo}
+        />
+      );
+    }
+  };
 
   console.log("profiles: ", profiles);
 
@@ -193,7 +217,7 @@ export default () => {
       >
         <div className={classes.drawerHeader} />
         {renderResult()}
-        <div className={classes.nameAndProfileContainer}>{renderContent}</div>
+        <div className={classes.nameAndProfileContainer}>{renderContent()}</div>
       </main>
     </div>
   );
