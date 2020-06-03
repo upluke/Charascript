@@ -9,6 +9,11 @@ import TopNav from "./TopNav";
 import LeftNav from "./LeftNav";
 import Introduction from "./Introduction";
 import Grid from "@material-ui/core/Grid";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import ResultCard from "./ResultCard";
+
 const drawerWidth = 270;
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,6 +43,12 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     justifyContent: "space-between",
   },
+  resultContainer: {
+    height: "72px",
+    width: "100%",
+    textAlign: "center",
+    margin: "50px auto 0 auto",
+  },
 }));
 
 export default () => {
@@ -48,6 +59,11 @@ export default () => {
   const [profiles, setProfiles] = useState([]);
   const [userInfo, setUserInfo] = useState({});
   const { userName, userEmail } = userInfo;
+  const [isResultShown, setResultShown] = useState(false);
+
+  const handleCloseResultCard = () => {
+    setResultShown(false);
+  };
 
   const handleUserInfoChange = (inputKey, value) => {
     let userInfoCopy = { ...userInfo };
@@ -68,6 +84,10 @@ export default () => {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleShowResult = () => {
+    setResultShown(true);
   };
 
   // get names from colections
@@ -93,6 +113,16 @@ export default () => {
 
   console.log("char: ", characters);
   console.log("profle: ", profiles);
+
+  const renderResult = () => {
+    return isResultShown && open ? (
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <ResultCard handleCloseResultCard={handleCloseResultCard} />
+        </Grid>
+      </Grid>
+    ) : null;
+  };
 
   const renderContent = open ? (
     <Grid container spacing={2}>
@@ -128,6 +158,7 @@ export default () => {
         handleDrawerClose={handleDrawerClose}
         getCollectionNamesAndProfiles={getCollectionNamesAndProfiles}
         userInfo={userInfo}
+        handleShowResult={handleShowResult}
       />
       <main
         className={clsx(classes.content, {
@@ -135,6 +166,7 @@ export default () => {
         })}
       >
         <div className={classes.drawerHeader} />
+        {renderResult()}
         <div className={classes.nameAndProfileContainer}>{renderContent}</div>
       </main>
     </div>

@@ -55,6 +55,7 @@ const LeftNav = ({
   handleDrawerClose,
   getCollectionNamesAndProfiles,
   userInfo,
+  handleShowResult,
 }) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -119,7 +120,11 @@ const LeftNav = ({
         })}
       </List>
       <Divider />
-      <StyledButton variant="contained" color="secondary">
+      <StyledButton
+        variant="contained"
+        color="secondary"
+        onClick={handleShowResult}
+      >
         Submit Your Answer
       </StyledButton>
     </Drawer>
