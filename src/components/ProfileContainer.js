@@ -8,6 +8,10 @@ const ProfileContainer = ({ profiles, setCurrentProfiles }) => {
   const [cards, setCards] = useState([...profiles]);
   const [closeAll, setCloseAll] = useState(false);
 
+  React.useEffect(() => {
+    setCards(profiles);
+  }, [profiles]);
+
   console.log("profileCard: ", cards);
   const moveCard = useCallback(
     (dragIndex, hoverIndex) => {

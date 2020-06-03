@@ -10,7 +10,6 @@ import LeftNav from "./LeftNav";
 import Introduction from "./Introduction";
 import Grid from "@material-ui/core/Grid";
 import ResultCard from "./ResultCard";
-import ResultProfileContainer from "./ResultProfileContainer";
 
 const drawerWidth = 270;
 const useStyles = makeStyles((theme) => ({
@@ -91,9 +90,9 @@ export default () => {
   };
 
   // get names from colections
-  const getCollectionNamesAndProfiles = (characters) => {
+  const getCollectionNamesAndProfiles = (chosenCharacters) => {
     let tmpChas = initialData.names.reduce((accumulator, name) => {
-      if (characters.includes(name.profileId)) {
+      if (chosenCharacters.includes(name.profileId)) {
         accumulator.push(name);
       }
       return accumulator;
@@ -102,7 +101,7 @@ export default () => {
     setCharacters(shuffle(tmpChas));
 
     let tmpProfs = initialData.profiles.reduce((accumulator, profile) => {
-      if (characters.includes(profile.profileId)) {
+      if (chosenCharacters.includes(profile.profileId)) {
         accumulator.push(profile);
       }
       return accumulator;
@@ -142,6 +141,7 @@ export default () => {
             handleCloseResultCard={handleCloseResultCard}
             characters={characters}
             currentProfiles={currentProfiles}
+            setCurrentProfiles={setCurrentProfiles}
           />
         </Grid>
       </Grid>
@@ -150,22 +150,7 @@ export default () => {
 
   const renderContent = () => {
     if (open) {
-      if (isResultShown) {
-        return (
-          <Grid container spacing={2}>
-            <Grid item xs={4}>
-              <div style={{ marginTop: "3rem" }}>
-                <NameContainer characters={characters} />
-              </div>
-            </Grid>
-            <Grid item xs={8}>
-              <div style={{ marginTop: "3rem" }}>
-                <ResultProfileContainer profiles={currentProfiles} />
-              </div>
-            </Grid>
-          </Grid>
-        );
-      } else {
+      if (!isResultShown) {
         return (
           <Grid container spacing={2}>
             <Grid item xs={4}>
@@ -209,6 +194,7 @@ export default () => {
         getCollectionNamesAndProfiles={getCollectionNamesAndProfiles}
         userInfo={userInfo}
         handleShowResult={handleShowResult}
+        handleCloseResultCard={handleCloseResultCard}
       />
       <main
         className={clsx(classes.content, {

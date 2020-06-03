@@ -3,7 +3,7 @@ import ResultProfileBox from "./ResultProfileBox";
 const ResultProfileContainer = ({ profiles }) => {
   return (
     <>
-      {profiles.map((p, index) => (
+      {profiles?.map((p, index) => (
         <ResultProfileBox
           key={p.profileId}
           profile={p.profile}
