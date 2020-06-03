@@ -111,6 +111,7 @@ export default () => {
     <Introduction
       handleUserInfoChange={handleUserInfoChange}
       handleDrawerOpen={handleDrawerOpen}
+      userInfo={userInfo}
     />
   );
 
@@ -126,6 +127,7 @@ export default () => {
         open={open}
         handleDrawerClose={handleDrawerClose}
         getCollectionNamesAndProfiles={getCollectionNamesAndProfiles}
+        userInfo={userInfo}
       />
       <main
         className={clsx(classes.content, {

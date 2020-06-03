@@ -42,7 +42,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Introduction = ({ handleUserInfoChange, handleDrawerOpen }) => {
+const Introduction = ({ handleUserInfoChange, handleDrawerOpen, userInfo }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -74,6 +74,7 @@ const Introduction = ({ handleUserInfoChange, handleDrawerOpen }) => {
         onChange={(e) => {
           handleUserInfoChange("userName", e.target.value);
         }}
+        value={userInfo?.userName}
         InputLabelProps={{
           classes: {
             root: classes.cssLabel,
@@ -98,6 +99,7 @@ const Introduction = ({ handleUserInfoChange, handleDrawerOpen }) => {
         onChange={(e) => {
           handleUserInfoChange("userEmail", e.target.value);
         }}
+        value={userInfo?.userEmail}
         InputLabelProps={{
           classes: {
             root: classes.cssLabel,
