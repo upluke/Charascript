@@ -1,110 +1,201 @@
-import React, { useState } from 'react'
-import clsx from 'clsx'
-import { makeStyles } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import initialData from '../database/allData'
-import NameContainer from './NameContainer'
-import ProfileContainer from './ProfileContainer'
-import TopNav from './TopNav'
-import LeftNav from './LeftNav'
-import Introduction from './Introduction'
-import Grid from '@material-ui/core/Grid'
-const drawerWidth = 270
+import React, { useState } from "react";
+import clsx from "clsx";
+import { makeStyles } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import initialData from "../database/allData";
+import NameContainer from "./NameContainer";
+import ProfileContainer from "./ProfileContainer";
+import TopNav from "./TopNav";
+import LeftNav from "./LeftNav";
+import Introduction from "./Introduction";
+import Grid from "@material-ui/core/Grid";
+import ResultCard from "./ResultCard";
+import ResultProfileContainer from "./ResultProfileContainer";
+
+const drawerWidth = 270;
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
-    background: '#2A363B',
-    color: '#fff',
-    minHeight:'100vh',
-    maxHeight:"auto",
+    display: "flex",
+    background: "#2A363B",
+    color: "#fff",
+    minHeight: "100vh",
+    maxHeight: "auto",
   },
   content: {
     padding: theme.spacing(5),
-    transition: theme.transitions.create('margin', {
+    transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: -drawerWidth,
   },
   contentShift: {
-    transition: theme.transitions.create('margin', {
+    transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
     marginLeft: 0,
   },
   nameAndProfileContainer: {
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'space-between',
+    display: "flex",
+    width: "100%",
+    justifyContent: "space-between",
   },
-}))
+  resultContainer: {
+    height: "72px",
+    width: "100%",
+    textAlign: "center",
+    margin: "50px auto 0 auto",
+  },
+}));
+
+const shuffle = (array) => {
+  var currentIndex = array.length,
+    temporaryValue,
+    randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+};
 
 export default () => {
-  const classes = useStyles()
-  const [open, setOpen] = useState(false)
+  const classes = useStyles();
+  const [open, setOpen] = useState(false);
 
+  const [characters, setCharacters] = useState([]);
+  const [profiles, setProfiles] = useState([]);
+  const [userInfo, setUserInfo] = useState({});
+  const { userName, userEmail } = userInfo;
+  const [isResultShown, setResultShown] = useState(false);
+  const [currentProfiles, setCurrentProfiles] = useState([]);
 
-  const [characters, setCharacters] = useState([])
-  const [profiles, setProfiles] = useState([])
+  const handleCloseResultCard = () => {
+    setResultShown(false);
+  };
 
-  React.useEffect(() => {
-    if (characters.length < 1) {
-      getCollectionNamesAndProfiles(initialData.collections[0].characters)
-    }
-  }, [])
-
-  // styling functions
-  const handleDrawerOpen = () => {
-    setOpen(true)
-  }
-
-  const handleDrawerClose = () => {
-    setOpen(false)
-  }
+  const handleUserInfoChange = (inputKey, value) => {
+    let userInfoCopy = { ...userInfo };
+    userInfoCopy[inputKey] = value;
+    setUserInfo(userInfoCopy);
+  };
 
   // get names from colections
   const getCollectionNamesAndProfiles = (characters) => {
     let tmpChas = initialData.names.reduce((accumulator, name) => {
       if (characters.includes(name.profileId)) {
-        accumulator.push(name)
+        accumulator.push(name);
       }
-      return accumulator
-    }, [])
+      return accumulator;
+    }, []);
 
-    setCharacters(tmpChas)
+    setCharacters(shuffle(tmpChas));
 
     let tmpProfs = initialData.profiles.reduce((accumulator, profile) => {
       if (characters.includes(profile.profileId)) {
-        accumulator.push(profile)
+        accumulator.push(profile);
       }
-      return accumulator
-    }, [])
+      return accumulator;
+    }, []);
 
-    setProfiles(tmpProfs)
-  }
+    setProfiles(tmpProfs);
+    setCurrentProfiles(tmpProfs);
+  };
 
-  console.log('char: ', characters)
-  console.log('profle: ', profiles)
+  React.useEffect(() => {
+    if (characters.length < 1) {
+      getCollectionNamesAndProfiles(initialData.collections[0].characters);
+    }
+  }, [characters.length]);
 
-  const renderContent = open ? (
-    <Grid container spacing={2}>
-      <Grid item xs={4}>
-        <div style={{ marginTop: '3rem' }}>
-          <NameContainer characters={characters} />
-        </div>
+  // styling functions
+  const handleDrawerOpen = () => {
+    if (userName && userEmail) setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+  const handleShowResult = () => {
+    setResultShown(true);
+  };
+
+  console.log("char: ", characters);
+  console.log("profle: ", profiles);
+
+  const renderResult = () => {
+    return isResultShown && open ? (
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <ResultCard
+            handleCloseResultCard={handleCloseResultCard}
+            characters={characters}
+            currentProfiles={currentProfiles}
+          />
+        </Grid>
       </Grid>
-      <Grid item xs={8}>
-        <div style={{ marginTop: '3rem' }}>
-          <ProfileContainer profiles={profiles} />
-        </div>
-      </Grid>
-    </Grid>
-  ) : (
-    <Introduction />
-  )
+    ) : null;
+  };
 
-  console.log("profiles: ",profiles)
+  const renderContent = () => {
+    if (open) {
+      if (isResultShown) {
+        return (
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <div style={{ marginTop: "3rem" }}>
+                <NameContainer characters={characters} />
+              </div>
+            </Grid>
+            <Grid item xs={8}>
+              <div style={{ marginTop: "3rem" }}>
+                <ResultProfileContainer profiles={currentProfiles} />
+              </div>
+            </Grid>
+          </Grid>
+        );
+      } else {
+        return (
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <div style={{ marginTop: "3rem" }}>
+                <NameContainer characters={characters} />
+              </div>
+            </Grid>
+            <Grid item xs={8}>
+              <div style={{ marginTop: "3rem" }}>
+                <ProfileContainer
+                  profiles={profiles}
+                  setCurrentProfiles={setCurrentProfiles}
+                />
+              </div>
+            </Grid>
+          </Grid>
+        );
+      }
+    } else {
+      return (
+        <Introduction
+          handleUserInfoChange={handleUserInfoChange}
+          handleDrawerOpen={handleDrawerOpen}
+          userInfo={userInfo}
+        />
+      );
+    }
+  };
+
+  console.log("profiles: ", profiles);
 
   return (
     <div className={classes.root}>
@@ -116,6 +207,8 @@ export default () => {
         open={open}
         handleDrawerClose={handleDrawerClose}
         getCollectionNamesAndProfiles={getCollectionNamesAndProfiles}
+        userInfo={userInfo}
+        handleShowResult={handleShowResult}
       />
       <main
         className={clsx(classes.content, {
@@ -123,8 +216,9 @@ export default () => {
         })}
       >
         <div className={classes.drawerHeader} />
-        <div className={classes.nameAndProfileContainer}>{renderContent}</div>
+        {renderResult()}
+        <div className={classes.nameAndProfileContainer}>{renderContent()}</div>
       </main>
     </div>
-  )
-}
+  );
+};
