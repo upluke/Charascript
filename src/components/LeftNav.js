@@ -56,6 +56,7 @@ const LeftNav = ({
   getCollectionNamesAndProfiles,
   userInfo,
   handleShowResult,
+  handleCloseResultCard,
 }) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -112,6 +113,7 @@ const LeftNav = ({
               onClick={() => {
                 getCollectionNamesAndProfiles(collection.characters);
                 setSelectedListItem(index);
+                handleCloseResultCard();
               }}
             >
               <ListItemText primary={text} />

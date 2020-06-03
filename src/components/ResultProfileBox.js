@@ -20,7 +20,7 @@ export default ({ profile, checking, index }) => {
       marginBottom: 20,
       textAlign: "center",
       cursor: "pointer",
-      backgroundColor: `${checking === false ? "grey" : "white"}`,
+      backgroundColor: `${checking ? "white" : "grey"}`,
     },
     title: {
       fontSize: 15,
@@ -42,7 +42,7 @@ export default ({ profile, checking, index }) => {
         onClick={handleExpandClick}
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            {checking === false ? <CloseIcon /> : <DoneIcon />}
+            {checking ? <DoneIcon /> : <CloseIcon />}
           </Avatar>
         }
         title={`${profile.substring(0, 25)}...`}
