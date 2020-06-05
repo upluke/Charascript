@@ -85,9 +85,6 @@ export default () => {
 
   const handleCloseResultCard = () => {
     setResultShown(false);
-    setTimeout(() => {
-      resetQuestions();
-    }, 100);
   };
 
   const handleUserInfoChange = (inputKey, value) => {
@@ -137,8 +134,10 @@ export default () => {
     setResultShown(true);
   };
 
-  const resetQuestions = () => {
-    getCollectionNamesAndProfiles(initialData.collections[0].characters);
+  const resetQuestions = (collectionIndex = 0) => {
+    getCollectionNamesAndProfiles(
+      initialData.collections[collectionIndex].characters
+    );
   };
 
   console.log("char: ", characters);
@@ -175,6 +174,7 @@ export default () => {
             currentProfiles={currentProfiles}
             setCurrentProfiles={setCurrentProfiles}
             userInfo={userInfo}
+            resetQuestions={resetQuestions}
           />
         </Grid>
       </Grid>
