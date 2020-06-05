@@ -10,7 +10,8 @@ import LeftNav from "./LeftNav";
 import Introduction from "./Introduction";
 import Grid from "@material-ui/core/Grid";
 import ResultCard from "./ResultCard";
-
+import Countdown from "react-countdown";
+import Typography from "@material-ui/core/Typography";
 const drawerWidth = 270;
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,6 +40,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     width: "100%",
     justifyContent: "space-between",
+  },
+  countDownContainer: {
+    marginTop: 50,
   },
   resultContainer: {
     height: "72px",
@@ -81,6 +85,9 @@ export default () => {
 
   const handleCloseResultCard = () => {
     setResultShown(false);
+    setTimeout(() => {
+      resetQuestions();
+    }, 100);
   };
 
   const handleUserInfoChange = (inputKey, value) => {
@@ -130,8 +137,33 @@ export default () => {
     setResultShown(true);
   };
 
+  const resetQuestions = () => {
+    getCollectionNamesAndProfiles(initialData.collections[0].characters);
+  };
+
   console.log("char: ", characters);
   console.log("profle: ", profiles);
+
+  const countDownRenderer = ({ hours, minutes, seconds, completed }) => {
+    if (completed) {
+      handleShowResult();
+      return null;
+    } else {
+      // Render a countdown
+      return (
+        <Grid item xs={12} className={classes.countDownContainer}>
+          <Typography variant="h6">
+            {`Your still have ${minutes} minutes and ${seconds} seconds to complete the test below`}
+          </Typography>
+          <Typography variant="body1" color="error">
+            You will be automatically redirect to "Result Page" after this !!!
+          </Typography>
+        </Grid>
+      );
+    }
+  };
+
+  const countDownTimer = characters.length * 30 * 1000;
 
   const renderResult = () => {
     return isResultShown && open ? (
@@ -142,6 +174,7 @@ export default () => {
             characters={characters}
             currentProfiles={currentProfiles}
             setCurrentProfiles={setCurrentProfiles}
+            userInfo={userInfo}
           />
         </Grid>
       </Grid>
@@ -153,6 +186,10 @@ export default () => {
       if (!isResultShown) {
         return (
           <Grid container spacing={2}>
+            <Countdown
+              date={Date.now() + countDownTimer}
+              renderer={countDownRenderer}
+            />
             <Grid item xs={4}>
               <div style={{ marginTop: "3rem" }}>
                 <NameContainer characters={characters} />
@@ -195,6 +232,7 @@ export default () => {
         userInfo={userInfo}
         handleShowResult={handleShowResult}
         handleCloseResultCard={handleCloseResultCard}
+        isResultShown={isResultShown}
       />
       <main
         className={clsx(classes.content, {

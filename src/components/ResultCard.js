@@ -12,6 +12,11 @@ import Grid from "@material-ui/core/Grid";
 import NameContainer from "./NameContainer";
 import ResultProfileContainer from "./ResultProfileContainer";
 import { cloneDeep } from "lodash";
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
+import ResultPdf from "./ResultPdf";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,12 +42,29 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: red[500],
   },
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  paper: {
+    minWidth: 800,
+    minHeight: 800,
+    backgroundColor: "white",
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+  reviewPDFButtonContainer: {
+    margin: 10,
+  },
 }));
 
 export default function ResultCard({
   handleCloseResultCard,
   characters,
   currentProfiles,
+  userInfo,
 }) {
   const classes = useStyles();
 
@@ -50,6 +72,7 @@ export default function ResultCard({
     let count = 0;
     let profilesWithChecking = cloneDeep(currentProfiles);
     characters.forEach((character, index) => {
+      profilesWithChecking[index].character = character.name;
       if (character.profileId === currentProfiles[index].profileId) {
         count = count + 1;
         profilesWithChecking[index].checking = true;
@@ -59,6 +82,8 @@ export default function ResultCard({
     return { count, profilesWithChecking };
   };
 
+  console.log(resultCounter());
+
   const handleClose = () => {
     handleCloseResultCard();
   };
@@ -66,6 +91,24 @@ export default function ResultCard({
   const result = resultCounter();
 
   const percentage = (result.count / characters.length) * 100;
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleModalOpen = () => {
+    setOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setOpen(false);
+    handleClose();
+  };
+
+  const resultTimeStamp = `${moment().format("MMMM Do YYYY, h:mm:ss a")}`;
+  const resultMessage = `Your score is ${percentage.toFixed(
+    2
+  )}% ! You answered ${result.count} of ${
+    characters.length
+  } questions correctly. `;
 
   return (
     <>
@@ -76,15 +119,55 @@ export default function ResultCard({
               <CancelIcon />
             </IconButton>
           }
-          title="The Testing Result Down Below"
-          subheader={`${moment().format("MMMM Do YYYY, h:mm:ss a")}`}
+          title="Your Testing Result Down Below"
+          subheader={resultTimeStamp}
         />
 
         <CardContent>
-          <Typography variant="h6" color="textSecondary" component="p">
-            {`Your score is ${percentage.toFixed(2)}% ! You answered ${
-              result.count
-            } of ${characters.length} questions correctly. `}
+          <Typography variant="h6" color="error" component="p">
+            {resultMessage}
+          </Typography>
+          <div>
+            <Button
+              className={classes.reviewPDFButtonContainer}
+              variant="contained"
+              color="secondary"
+              onClick={handleModalOpen}
+            >
+              review the result in PDF
+            </Button>
+            <Modal
+              aria-labelledby="transition-modal-title"
+              aria-describedby="transition-modal-description"
+              className={classes.modal}
+              open={open}
+              onClose={handleModalClose}
+              closeAfterTransition
+              BackdropComponent={Backdrop}
+              BackdropProps={{
+                timeout: 500,
+              }}
+            >
+              <Fade in={open}>
+                <div className={classes.paper}>
+                  <h2 id="transition-modal-title">Testing Result PDF</h2>
+                  <p id="transition-modal-description">
+                    Please move around your mouse to show the toolbar for
+                    printing or downloading this PDF
+                  </p>
+                  <ResultPdf
+                    userInfo={userInfo}
+                    result={result}
+                    resultTimeStamp={resultTimeStamp}
+                    resultMessage={resultMessage}
+                  />
+                </div>
+              </Fade>
+            </Modal>
+          </div>
+          <Typography variant="body1" color="error" component="p">
+            Once your click the button upward or leave (turn off) the result
+            card all your test will be reset !!!
           </Typography>
         </CardContent>
       </Card>

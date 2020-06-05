@@ -57,6 +57,7 @@ const LeftNav = ({
   userInfo,
   handleShowResult,
   handleCloseResultCard,
+  isResultShown,
 }) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -122,13 +123,15 @@ const LeftNav = ({
         })}
       </List>
       <Divider />
-      <StyledButton
-        variant="contained"
-        color="secondary"
-        onClick={handleShowResult}
-      >
-        Submit Your Answer
-      </StyledButton>
+      {isResultShown ? null : (
+        <StyledButton
+          variant="contained"
+          color="secondary"
+          onClick={handleShowResult}
+        >
+          Submit Your Answer
+        </StyledButton>
+      )}
     </Drawer>
   );
 };
