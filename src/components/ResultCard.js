@@ -12,6 +12,10 @@ import Grid from "@material-ui/core/Grid";
 import NameContainer from "./NameContainer";
 import ResultProfileContainer from "./ResultProfileContainer";
 import { cloneDeep } from "lodash";
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
+import ResultPdf from "./ResultPdf";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,6 +40,19 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     backgroundColor: red[500],
+  },
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  paper: {
+    minWidth: 800,
+    minHeight: 800,
+    backgroundColor: "white",
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
   },
 }));
 
@@ -67,8 +84,47 @@ export default function ResultCard({
 
   const percentage = (result.count / characters.length) * 100;
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleModalOpen = () => {
+    setOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
+      <br />
+      <br />
+      <div>
+        <button type="button" onClick={handleModalOpen}>
+          react-transition-group
+        </button>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          className={classes.modal}
+          open={open}
+          onClose={handleModalClose}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={open}>
+            <div className={classes.paper}>
+              <h2 id="transition-modal-title">Transition modal</h2>
+              <p id="transition-modal-description">
+                react-transition-group animates me.
+              </p>
+              <ResultPdf />
+            </div>
+          </Fade>
+        </Modal>
+      </div>
       <Card className={classes.root}>
         <CardHeader
           action={
