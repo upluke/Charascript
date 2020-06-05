@@ -108,12 +108,12 @@ export default function ResultCard({
               <CancelIcon />
             </IconButton>
           }
-          title="The Testing Result Down Below"
+          title="Your Testing Result Down Below"
           subheader={`${moment().format("MMMM Do YYYY, h:mm:ss a")}`}
         />
 
         <CardContent>
-          <Typography variant="h6" color="textSecondary" component="p">
+          <Typography variant="h6" color="error" component="p">
             {`Your score is ${percentage.toFixed(2)}% ! You answered ${
               result.count
             } of ${characters.length} questions correctly. `}
@@ -150,7 +150,7 @@ export default function ResultCard({
               </Fade>
             </Modal>
           </div>
-          <Typography variant="h6" color="red" component="p">
+          <Typography variant="body1" color="error" component="p">
             Once your click the button upward or leave (turn off) the result
             card all your test will be reset !!!
           </Typography>

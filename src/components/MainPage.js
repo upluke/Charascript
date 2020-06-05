@@ -155,6 +155,9 @@ export default () => {
           <Typography variant="h6">
             {`Your still have ${minutes} minutes and ${seconds} seconds to complete the test below`}
           </Typography>
+          <Typography variant="body1" color="error">
+            You will be automatically redirect to "Result Page" after this !!!
+          </Typography>
         </Grid>
       );
     }
@@ -228,6 +231,7 @@ export default () => {
         userInfo={userInfo}
         handleShowResult={handleShowResult}
         handleCloseResultCard={handleCloseResultCard}
+        isResultShown={isResultShown}
       />
       <main
         className={clsx(classes.content, {
