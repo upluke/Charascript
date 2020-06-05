@@ -64,6 +64,7 @@ export default function ResultCard({
   handleCloseResultCard,
   characters,
   currentProfiles,
+  userInfo,
 }) {
   const classes = useStyles();
 
@@ -71,6 +72,7 @@ export default function ResultCard({
     let count = 0;
     let profilesWithChecking = cloneDeep(currentProfiles);
     characters.forEach((character, index) => {
+      profilesWithChecking[index].character = character.name;
       if (character.profileId === currentProfiles[index].profileId) {
         count = count + 1;
         profilesWithChecking[index].checking = true;
@@ -79,6 +81,8 @@ export default function ResultCard({
 
     return { count, profilesWithChecking };
   };
+
+  console.log(resultCounter());
 
   const handleClose = () => {
     handleCloseResultCard();
@@ -99,6 +103,13 @@ export default function ResultCard({
     handleClose();
   };
 
+  const resultTimeStamp = `${moment().format("MMMM Do YYYY, h:mm:ss a")}`;
+  const resultMessage = `Your score is ${percentage.toFixed(
+    2
+  )}% ! You answered ${result.count} of ${
+    characters.length
+  } questions correctly. `;
+
   return (
     <>
       <Card className={classes.root}>
@@ -109,14 +120,12 @@ export default function ResultCard({
             </IconButton>
           }
           title="Your Testing Result Down Below"
-          subheader={`${moment().format("MMMM Do YYYY, h:mm:ss a")}`}
+          subheader={resultTimeStamp}
         />
 
         <CardContent>
           <Typography variant="h6" color="error" component="p">
-            {`Your score is ${percentage.toFixed(2)}% ! You answered ${
-              result.count
-            } of ${characters.length} questions correctly. `}
+            {resultMessage}
           </Typography>
           <div>
             <Button
@@ -141,11 +150,17 @@ export default function ResultCard({
             >
               <Fade in={open}>
                 <div className={classes.paper}>
-                  <h2 id="transition-modal-title">Transition modal</h2>
+                  <h2 id="transition-modal-title">Testing Result PDF</h2>
                   <p id="transition-modal-description">
-                    react-transition-group animates me.
+                    Please move around your mouse to show the toolbar for
+                    printing or downloading this PDF
                   </p>
-                  <ResultPdf />
+                  <ResultPdf
+                    userInfo={userInfo}
+                    result={result}
+                    resultTimeStamp={resultTimeStamp}
+                    resultMessage={resultMessage}
+                  />
                 </div>
               </Fade>
             </Modal>

@@ -18,34 +18,92 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 10,
   },
+  header: {
+    fontSize: 20,
+    fontWeight: 900,
+  },
+  headLine: {
+    fontSize: 30,
+    color: "grey",
+    fontWeight: 900,
+    marginBottom: 15,
+  },
+  midHeader: {
+    fontSize: 16,
+    color: "red",
+  },
+  subHeader: {
+    fontSize: 12,
+  },
+  rightAnswer: {
+    fontSize: 12,
+    color: "blue",
+    fontWeight: 900,
+  },
+  wrongAnswer: {
+    fontSize: 12,
+    color: "red",
+    fontWeight: 900,
+  },
+  answerCard: {
+    margin: 0,
+    padding: 0,
+  },
 });
 
-const MyDocument = () => (
-  <Document>
-    <Page size="A4" style={styles.page}>
-      <View style={styles.section}>
-        <Text>Section #1</Text>
-        <Text>
-          In the end, the magnitude-9.0 Tohoku earthquake and subsequent tsunami
-          killed more than eighteen thousand people, devastated northeast Japan,
-          triggered the meltdown at the Fukushima power plant, and cost an
-          estimated two hundred and twenty billion dollars. The shaking earlier
-          in the week turned out to be the foreshocks of the largest earthquake
-          in the nation’s recorded history. But for Chris Goldfinger, a
-          paleoseismologist at Oregon State University and one of the world’s
-          leading experts on a little-known fault line, the main quake was
-          itself a kind of foreshock: a preview of another earthquake still to
-          come.
-        </Text>
-      </View>
-      <View style={styles.section}>
-        <Text>Section #2</Text>
-      </View>
-    </Page>
-  </Document>
-);
+const Divider = ({ size }) => {
+  return size === "big" ? (
+    <Text>===================================</Text>
+  ) : (
+    <Text>
+      ......................................................................
+    </Text>
+  );
+};
 
-export default () => {
+const ResultDetailCard = ({ el }) => {
+  return (
+    <View style={styles.answerCard}>
+      <Divider />
+      {el.checking ? (
+        <Text
+          style={styles.rightAnswer}
+        >{`T - Character:${el.character} Result : Correct!`}</Text>
+      ) : (
+        <Text
+          style={styles.wrongAnswer}
+        >{`X - Character:${el.character} Result : Wrong!`}</Text>
+      )}
+      <Text style={styles.subHeader}>{`Profile: ${el.profile}`}</Text>
+    </View>
+  );
+};
+
+export default ({ userInfo, result, resultTimeStamp, resultMessage }) => {
+  const MyDocument = () => (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <Text style={styles.headLine}>Charascript Testing Result</Text>
+          <Text
+            style={styles.header}
+          >{`Name:${userInfo.userName} Email:${userInfo.userEmail}`}</Text>
+          <Text
+            style={styles.subHeader}
+          >{`Result generation at: ${resultTimeStamp}`}</Text>
+          <Divider size={"big"} />
+          <Text style={styles.midHeader}>{`Result: ${resultMessage}`}</Text>
+          <Divider size={"big"} />
+          <Text style={styles.header}>
+            The details of the testing down below:
+          </Text>
+          {result?.profilesWithChecking?.map((el) => {
+            return <ResultDetailCard el={el} />;
+          })}
+        </View>
+      </Page>
+    </Document>
+  );
   return (
     <PDFViewer width={750} height={700}>
       <MyDocument />

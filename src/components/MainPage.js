@@ -174,6 +174,7 @@ export default () => {
             characters={characters}
             currentProfiles={currentProfiles}
             setCurrentProfiles={setCurrentProfiles}
+            userInfo={userInfo}
           />
         </Grid>
       </Grid>
