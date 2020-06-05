@@ -16,6 +16,7 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import ResultPdf from "./ResultPdf";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,6 +54,9 @@ const useStyles = makeStyles((theme) => ({
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+  },
+  reviewPDFButtonContainer: {
+    margin: 10,
   },
 }));
 
@@ -92,39 +96,11 @@ export default function ResultCard({
 
   const handleModalClose = () => {
     setOpen(false);
+    handleClose();
   };
 
   return (
     <>
-      <br />
-      <br />
-      <div>
-        <button type="button" onClick={handleModalOpen}>
-          react-transition-group
-        </button>
-        <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
-          className={classes.modal}
-          open={open}
-          onClose={handleModalClose}
-          closeAfterTransition
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 500,
-          }}
-        >
-          <Fade in={open}>
-            <div className={classes.paper}>
-              <h2 id="transition-modal-title">Transition modal</h2>
-              <p id="transition-modal-description">
-                react-transition-group animates me.
-              </p>
-              <ResultPdf />
-            </div>
-          </Fade>
-        </Modal>
-      </div>
       <Card className={classes.root}>
         <CardHeader
           action={
@@ -141,6 +117,42 @@ export default function ResultCard({
             {`Your score is ${percentage.toFixed(2)}% ! You answered ${
               result.count
             } of ${characters.length} questions correctly. `}
+          </Typography>
+          <div>
+            <Button
+              className={classes.reviewPDFButtonContainer}
+              variant="contained"
+              color="secondary"
+              onClick={handleModalOpen}
+            >
+              review the result in PDF
+            </Button>
+            <Modal
+              aria-labelledby="transition-modal-title"
+              aria-describedby="transition-modal-description"
+              className={classes.modal}
+              open={open}
+              onClose={handleModalClose}
+              closeAfterTransition
+              BackdropComponent={Backdrop}
+              BackdropProps={{
+                timeout: 500,
+              }}
+            >
+              <Fade in={open}>
+                <div className={classes.paper}>
+                  <h2 id="transition-modal-title">Transition modal</h2>
+                  <p id="transition-modal-description">
+                    react-transition-group animates me.
+                  </p>
+                  <ResultPdf />
+                </div>
+              </Fade>
+            </Modal>
+          </div>
+          <Typography variant="h6" color="red" component="p">
+            Once your click the button upward or leave (turn off) the result
+            card all your test will be reset !!!
           </Typography>
         </CardContent>
       </Card>

@@ -85,6 +85,9 @@ export default () => {
 
   const handleCloseResultCard = () => {
     setResultShown(false);
+    setTimeout(() => {
+      resetQuestions();
+    }, 100);
   };
 
   const handleUserInfoChange = (inputKey, value) => {
@@ -132,6 +135,10 @@ export default () => {
 
   const handleShowResult = () => {
     setResultShown(true);
+  };
+
+  const resetQuestions = () => {
+    getCollectionNamesAndProfiles(initialData.collections[0].characters);
   };
 
   console.log("char: ", characters);

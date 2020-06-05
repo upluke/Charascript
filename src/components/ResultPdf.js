@@ -11,7 +11,6 @@ import {
 // Create styles
 const styles = StyleSheet.create({
   page: {
-    width: "750px !important",
     flexDirection: "cloumn",
     backgroundColor: "#E4E4E4",
   },
