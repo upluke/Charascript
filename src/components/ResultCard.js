@@ -65,6 +65,7 @@ export default function ResultCard({
   characters,
   currentProfiles,
   userInfo,
+  resetQuestions,
 }) {
   const classes = useStyles();
 
@@ -85,7 +86,11 @@ export default function ResultCard({
   console.log(resultCounter());
 
   const handleClose = () => {
+    const firstNameId = characters[0].nameId;
+    const collectionIndexArray = firstNameId.split("-");
+    const collectionIndex = collectionIndexArray[1];
     handleCloseResultCard();
+    resetQuestions(collectionIndex);
   };
 
   const result = resultCounter();
