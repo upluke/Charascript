@@ -11,13 +11,13 @@ import {
 // Create styles
 const styles = StyleSheet.create({
   page: {
+    width: "750px !important",
     flexDirection: "cloumn",
     backgroundColor: "#E4E4E4",
   },
   section: {
     margin: 10,
     padding: 10,
-    display: "block",
   },
 });
 
@@ -48,7 +48,7 @@ const MyDocument = () => (
 
 export default () => {
   return (
-    <PDFViewer>
+    <PDFViewer width={750} height={700}>
       <MyDocument />
     </PDFViewer>
   );
