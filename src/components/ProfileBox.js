@@ -96,6 +96,8 @@ export default ({
     }),
   });
   const opacity = isDragging ? 0 : 1;
+  const width="800px"
+  
   drag(drop(ref));
 
   React.useEffect(() => {
@@ -108,7 +110,7 @@ export default ({
   }, [closeAll, expanded, isDragging, setCloseAll]);
 
   return (
-    <div ref={ref} style={{ ...style, opacity }}>
+    <div ref={ref} style={{ ...style, opacity,width }}>
       <Card className={classes.root}>
         <CardHeader
           onClick={handleExpandClick}
