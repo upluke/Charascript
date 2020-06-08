@@ -68,11 +68,11 @@ const ResultDetailCard = ({ el }) => {
       {el.checking ? (
         <Text
           style={styles.rightAnswer}
-        >{`T - Character:${el.character} Result : Correct!`}</Text>
+        >{`Correct - Character:${el.character}`}</Text>
       ) : (
         <Text
           style={styles.wrongAnswer}
-        >{`X - Character:${el.character} Result : Wrong!`}</Text>
+        >{`Wrong - Character:${el.character}`}</Text>
       )}
       <Text style={styles.subHeader}>{`Profile: ${el.profile}`}</Text>
     </View>
@@ -84,18 +84,18 @@ export default ({ userInfo, result, resultTimeStamp, resultMessage }) => {
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
-          <Text style={styles.headLine}>Charascript Testing Result</Text>
+          <Text style={styles.headLine}>Charascript Test Result</Text>
           <Text
             style={styles.header}
           >{`Name:${userInfo.userName} Email:${userInfo.userEmail}`}</Text>
           <Text
             style={styles.subHeader}
-          >{`Result generation at: ${resultTimeStamp}`}</Text>
+          >{`Result generated at: ${resultTimeStamp}`}</Text>
           <Divider size={"big"} />
           <Text style={styles.midHeader}>{`Result: ${resultMessage}`}</Text>
           <Divider size={"big"} />
           <Text style={styles.header}>
-            The details of the testing down below:
+             Test detail is shown below:
           </Text>
           {result?.profilesWithChecking?.map((el) => {
             return <ResultDetailCard el={el} />;
