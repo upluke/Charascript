@@ -21,13 +21,14 @@ export default ({ profile, checking, index }) => {
       textAlign: "center",
       cursor: "pointer",
       backgroundColor: `${checking ? "white" : "grey"}`,
+      color:`${checking ? "black" : "white"}`
     },
     title: {
       fontSize: 15,
     },
 
     avatar: {
-      backgroundColor: red[500],
+      backgroundColor: "#FF847C",
     },
   }));
   const classes = useStyles();
@@ -53,7 +54,7 @@ export default ({ profile, checking, index }) => {
         <CardContent onClick={handleExpandClick}>
           <Typography
             className={classes.title}
-            color="textSecondary"
+            color={`${checking ? "black" : "white"}`}
             gutterBottom
           >
             {profile}
