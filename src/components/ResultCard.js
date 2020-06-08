@@ -129,14 +129,14 @@ export default function ResultCard({
         />
 
         <CardContent>
-          <Typography variant="h6" color="error" component="p">
+          <Typography variant="h6" color="initial" component="p">
             {resultMessage}
           </Typography>
           <div>
             <Button
               className={classes.reviewPDFButtonContainer}
               variant="contained"
-              color="secondary"
+              color="default"
               onClick={handleModalOpen}
             >
               review the result in PDF
@@ -170,9 +170,8 @@ export default function ResultCard({
               </Fade>
             </Modal>
           </div>
-          <Typography variant="body1" color="error" component="p">
-            Once your click the button upward or leave (turn off) the result
-            card all your test will be reset !!!
+          <Typography variant="body1" color="initial" component="p">
+            Note: once your click the above button or leave (turn off) this page, all of your test will be reset.
           </Typography>
         </CardContent>
       </Card>
